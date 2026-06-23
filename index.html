@@ -1993,6 +1993,16 @@
                 <input type="text" class="modal-input" id="newCategoryInput" placeholder="새 카테고리명 입력">
                 <button class="modal-btn" onclick="addNewCategory()">추가</button>
             </div>
+            
+            <!-- 💾 데이터 백업 및 복원 영역 추가 -->
+            <div style="border-top: 1px solid var(--border-color); padding-top: 14px; margin-top: 6px; display: flex; flex-direction: column; gap: 8px;">
+                <h3 style="font-size: 13px; color: var(--primary-color); font-weight: 700;">💾 레시피 백업 & 복원</h3>
+                <div style="display: flex; gap: 8px; width: 100%;">
+                    <button class="modal-btn" style="flex: 1; background-color: var(--primary-color); font-size: 12px; height: 36px; padding: 0;" onclick="exportRecipesBackup()">백업 파일 내보내기</button>
+                    <button class="modal-btn" style="flex: 1; background-color: var(--text-secondary); font-size: 12px; height: 36px; padding: 0;" onclick="triggerImportBackup()">백업 파일 불러오기</button>
+                </div>
+                <input type="file" id="backupFileInput" accept=".json" style="display: none;" onchange="importRecipesBackup(event)">
+            </div>
         </div>
     </div>
 
@@ -2770,6 +2780,73 @@
         const minStr = minutes < 10 ? '0' + minutes : minutes;
         const secStr = seconds < 10 ? '0' + seconds : seconds;
         document.getElementById('timerDisplay').innerText = `${minStr}:${secStr}`;
+    }
+
+    // ==================== [BACKUP & RESTORE LOGIC] ====================
+    // 💾 레시피 백업 내보내기 (JSON 파일 생성 및 다운로드)
+    function exportRecipesBackup() {
+        if (dbRecipes.length === 0) {
+            alert("백업할 레시피가 없습니다.");
+            return;
+        }
+        
+        const backupData = {
+            recipes: dbRecipes,
+            categories: dbCategories,
+            version: "1.0",
+            exportedAt: new Date().toISOString()
+        };
+        
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
+        const downloadAnchor = document.createElement('a');
+        
+        const dateStr = new Date().toISOString().slice(0, 10);
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `baking_recipe_backup_${dateStr}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+    }
+
+    // 💾 백업 파일 선택창 열기
+    function triggerImportBackup() {
+        document.getElementById('backupFileInput').click();
+    }
+
+    // 💾 백업 파일 로드 및 로컬 데이터 복구
+    function importRecipesBackup(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const imported = JSON.parse(e.target.result);
+                if (!imported.recipes || !imported.categories) {
+                    throw new Error("올바른 백업 파일 형식이 아닙니다.");
+                }
+                
+                const msg = `선택한 백업 파일에서 레시피 ${imported.recipes.length}개와 카테고리 ${imported.categories.length}개를 복원하시겠습니까?\n\n⚠️ 주의: 현재 기기에 저장된 기존 레시피 데이터는 전부 삭제되고 덮어씌워집니다.`;
+                if (confirm(msg)) {
+                    dbRecipes = imported.recipes;
+                    dbCategories = imported.categories;
+                    
+                    localStorage.setItem('recipes', JSON.stringify(dbRecipes));
+                    localStorage.setItem('categories', JSON.stringify(dbCategories));
+                    
+                    // 화면 갱신
+                    renderCategoryChips();
+                    renderRecipes();
+                    closeCategoryModal();
+                    alert("🎉 레시피 데이터가 완벽하게 복원되었습니다!");
+                }
+            } catch (err) {
+                alert("❌ 백업 파일을 불러오지 못했습니다. 올바른 백업 JSON 파일인지 확인해 주세요.");
+                console.error(err);
+            }
+        };
+        reader.readAsText(file);
+        event.target.value = ""; // 파일 선택 리셋
     }
 
     renderCategoryChips();
