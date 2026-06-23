@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>나의 오븐 레시피</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23f7efe9'/%3E%3Cpath d='M18 39c0-10 6-18 14-18s14 8 14 18v3H18z' fill='%23d8896f'/%3E%3Cpath d='M24 35c2-4 5-7 8-7s6 3 8 7' fill='none' stroke='%238d5b4c' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
     <!-- Google Fonts Inter & Outfit -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Tesseract.js (On-device OCR 시뮬레이션용 CDN) -->
@@ -13,7 +14,7 @@
             --primary-color: #8D5B4C; /* Warm Brown */
             --primary-light: #F7EFE9;
             --accent-color: #E2725B; /* Terracotta Red */
-            --bg-color: #ECE5DE; 
+            --bg-color: #ECE5DE;
             --iphone-bg: #FFFFFF;
             --text-primary: #3E2723;
             --text-secondary: #7D6B60;
@@ -30,7 +31,7 @@
 
         /* html, body, 컨테이너 전반에 가로 스크롤(옆스크롤) 방지 처리 */
         html, body {
-            background-color: #2D2D2D; 
+            background-color: #2D2D2D;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -555,7 +556,7 @@
             color: #CCCCCC;
         }
 
-        /* 
+        /*
            재료 리스트 가로 흘러넘침 방지 스타일링:
            flex 비율을 조절하고 최소 가로폭을 해제해 화면 바깥으로 나가는 가로 스크롤을 방지합니다.
         */
@@ -618,9 +619,9 @@
             min-width: 0;
         }
 
-        /* 
-           롤백 단순화된 오븐 사양 입력용 로우: 
-           윗불/아랫불을 단일 온도 칸으로 통일하고 간결하게 렌더링 
+        /*
+           롤백 단순화된 오븐 사양 입력용 로우:
+           윗불/아랫불을 단일 온도 칸으로 통일하고 간결하게 렌더링
         */
         .oven-spec-row {
             display: flex;
@@ -1043,504 +1044,1155 @@
             font-weight: 600;
             cursor: pointer;
         }
+
+        /* Visual refresh */
+        :root {
+            --primary-color: #855345;
+            --primary-light: #FFF2EA;
+            --accent-color: #D96F54;
+            --bg-color: #F1E6DB;
+            --iphone-bg: #FFFDFC;
+            --text-primary: #392620;
+            --text-secondary: #826C61;
+            --border-color: #EBDDD4;
+            --surface-soft: #FFF7F1;
+            --surface-card: rgba(255, 253, 250, 0.92);
+            --cream-shadow: rgba(126, 77, 59, 0.16);
+            --pressed-shadow: rgba(126, 77, 59, 0.26);
+            --ring-color: rgba(217, 111, 84, 0.28);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        html, body {
+            min-height: 100dvh;
+            background:
+                radial-gradient(circle at top left, rgba(255, 226, 206, 0.46), transparent 32rem),
+                radial-gradient(circle at bottom right, rgba(166, 104, 76, 0.32), transparent 28rem),
+                #2E2824;
+            font-variant-numeric: tabular-nums;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.14;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.22) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.16) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        .simulator-container {
+            max-width: 430px;
+            height: min(100dvh, 940px);
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 34px;
+            background:
+                linear-gradient(180deg, rgba(255, 248, 241, 0.95), rgba(255, 253, 250, 0.98)),
+                var(--iphone-bg);
+            box-shadow:
+                0 28px 80px rgba(20, 13, 9, 0.34),
+                0 3px 0 rgba(255, 255, 255, 0.7) inset;
+        }
+
+        .app-content,
+        .page {
+            background:
+                radial-gradient(circle at 92% 8%, rgba(231, 155, 121, 0.2), transparent 9rem),
+                linear-gradient(180deg, #FFF9F4 0%, #FFFDFC 42%, #FFF7F0 100%);
+        }
+
+        .page {
+            animation: pageLift 0.24s cubic-bezier(.2,.8,.2,1);
+        }
+
+        @keyframes pageLift {
+            from { opacity: 0; transform: translateY(10px) scale(0.99); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .nav-bar {
+            height: 62px;
+            padding: 0 18px;
+            border-bottom: 1px solid rgba(141, 83, 69, 0.1);
+            background: rgba(255, 253, 250, 0.82);
+            backdrop-filter: blur(18px);
+        }
+
+        .nav-bar h1 {
+            max-width: 48%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--text-primary);
+            font-size: 17px;
+            letter-spacing: 0;
+        }
+
+        .nav-btn,
+        .section-action-btn,
+        .btn-clear-buffer,
+        .timer-btn,
+        .modal-btn,
+        .baking-nav-btn,
+        .category-chip,
+        .btn-manage-categories,
+        .fab-add {
+            transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+        }
+
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible {
+            outline: 3px solid var(--ring-color);
+            outline-offset: 2px;
+        }
+
+        button:active,
+        .recipe-card:active {
+            transform: translateY(1px) scale(0.98);
+        }
+
+        .home-scroll,
+        .detail-scroll,
+        .edit-form {
+            padding: 18px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(133, 83, 69, 0.3) transparent;
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 14px;
+        }
+
+        .search-input {
+            height: 48px;
+            border-radius: 18px;
+            border: 1px solid rgba(133, 83, 69, 0.1);
+            background-color: rgba(255, 255, 255, 0.74);
+            box-shadow: 0 12px 30px rgba(126, 77, 59, 0.08);
+            font-size: 14px;
+        }
+
+        .categories-filter-wrapper {
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .categories-filter {
+            gap: 9px;
+            padding: 2px 1px 7px;
+        }
+
+        .category-chip {
+            min-height: 36px;
+            border: 1px solid rgba(133, 83, 69, 0.09);
+            border-radius: 999px;
+            background: rgba(255, 247, 241, 0.85);
+            color: #7A5449;
+            box-shadow: 0 6px 16px rgba(126, 77, 59, 0.05);
+        }
+
+        .category-chip.active {
+            background: linear-gradient(135deg, #855345, #B8634E);
+            color: #fff;
+            box-shadow: 0 10px 22px rgba(133, 83, 69, 0.22);
+        }
+
+        .btn-manage-categories {
+            width: 36px;
+            height: 36px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 8px 20px rgba(126, 77, 59, 0.09);
+        }
+
+        .favorites-bar {
+            margin-bottom: 18px;
+            padding: 13px 15px;
+            border: 1px solid rgba(133, 83, 69, 0.08);
+            border-radius: 18px;
+            background:
+                linear-gradient(135deg, rgba(255, 245, 236, 0.95), rgba(255, 251, 246, 0.96));
+            box-shadow: 0 14px 32px rgba(126, 77, 59, 0.08);
+        }
+
+        .switch {
+            width: 48px;
+            height: 28px;
+        }
+
+        .slider {
+            background-color: #E2D1C6;
+            box-shadow: 0 2px 8px rgba(126, 77, 59, 0.12) inset;
+        }
+
+        .slider:before {
+            width: 22px;
+            height: 22px;
+            box-shadow: 0 3px 10px rgba(126, 77, 59, 0.24);
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(135deg, #855345, #D96F54);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        .recipe-grid {
+            gap: 14px;
+            align-items: start;
+            padding-bottom: 88px;
+        }
+
+        .recipe-card {
+            position: relative;
+            min-height: 196px;
+            border: 1px solid rgba(133, 83, 69, 0.09);
+            border-radius: 22px;
+            background: var(--surface-card);
+            box-shadow: 0 16px 32px rgba(126, 77, 59, 0.1);
+            transform-origin: center;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 42px rgba(126, 77, 59, 0.14);
+        }
+
+        .recipe-card-img {
+            height: 112px;
+            background:
+                radial-gradient(circle at 35% 28%, rgba(255, 255, 255, 0.9), transparent 2.3rem),
+                linear-gradient(135deg, #F6C8A6 0%, #F3A98A 54%, #B76B57 100%);
+            overflow: hidden;
+        }
+
+        .recipe-card-img::after {
+            content: "";
+            position: absolute;
+            inset: auto -16px -28px 20%;
+            height: 72px;
+            border-radius: 999px 999px 22px 22px;
+            background: rgba(255, 245, 229, 0.58);
+            transform: rotate(-8deg);
+        }
+
+        .recipe-card-badge {
+            top: 9px;
+            left: 9px;
+            z-index: 1;
+            border-radius: 999px;
+            padding: 4px 8px;
+            background-color: rgba(255, 253, 250, 0.9);
+            color: #6D463C;
+            font-size: 10px;
+            box-shadow: 0 6px 14px rgba(126, 77, 59, 0.11);
+        }
+
+        .recipe-card-fav {
+            z-index: 1;
+            top: 9px;
+            right: 10px;
+            padding: 3px 5px;
+            border-radius: 999px;
+            background: rgba(255, 253, 250, 0.82);
+            filter: drop-shadow(0 5px 10px rgba(126, 77, 59, 0.18));
+        }
+
+        .recipe-card-info {
+            gap: 8px;
+            padding: 12px;
+        }
+
+        .recipe-card-title {
+            font-size: 15px;
+            line-height: 1.25;
+            white-space: normal;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .recipe-card-specs {
+            gap: 8px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            font-size: 11px;
+        }
+
+        .recipe-card-specs span {
+            border-radius: 999px;
+            padding: 4px 7px;
+            background: #FFF3EA;
+        }
+
+        .recipe-card-specs .temp {
+            color: #B85542;
+        }
+
+        .fab-add {
+            right: 22px;
+            bottom: 22px;
+            width: 60px;
+            height: 60px;
+            border-radius: 22px;
+            background: linear-gradient(135deg, #865143 0%, #D96F54 100%);
+            box-shadow: 0 18px 34px rgba(133, 83, 69, 0.34);
+        }
+
+        .fab-add:hover {
+            transform: translateY(-2px) rotate(2deg);
+        }
+
+        .live-text-wrapper {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(133, 83, 69, 0.08);
+            background:
+                radial-gradient(circle at 8% 18%, rgba(255, 255, 255, 0.86), transparent 4rem),
+                linear-gradient(135deg, #FFF1E6, #F7E3D7);
+        }
+
+        .ocr-hint {
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        .ocr-canvas-container {
+            height: 180px;
+            border-radius: 20px;
+            border: 1.5px dashed rgba(133, 83, 69, 0.32);
+            background:
+                radial-gradient(circle at 50% 22%, rgba(255, 255, 255, 0.82), transparent 4rem),
+                linear-gradient(135deg, #F6E2D5, #E8C8B7);
+            box-shadow: 0 12px 26px rgba(126, 77, 59, 0.1) inset;
+        }
+
+        .clipboard-widget {
+            border-radius: 14px;
+            background-color: rgba(255, 253, 250, 0.72);
+            box-shadow: 0 10px 24px rgba(126, 77, 59, 0.08);
+        }
+
+        .clipboard-text {
+            min-width: 0;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.86);
+        }
+
+        .edit-form {
+            gap: 18px;
+        }
+
+        .form-group {
+            gap: 8px;
+        }
+
+        .form-group label,
+        .form-section-header h3 {
+            color: #70463B;
+            letter-spacing: 0;
+        }
+
+        .form-input,
+        .step-textarea,
+        .modal-input,
+        .ingredient-row input,
+        .oven-spec-row input {
+            border-radius: 13px;
+            border-color: rgba(133, 83, 69, 0.14);
+            background-color: rgba(255, 255, 255, 0.84);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset;
+        }
+
+        .form-input:focus,
+        .step-textarea:focus,
+        .modal-input:focus {
+            border-color: rgba(217, 111, 84, 0.62);
+            box-shadow: 0 0 0 4px rgba(217, 111, 84, 0.12);
+        }
+
+        .form-section-header {
+            margin-top: 6px;
+            border-bottom: 0;
+            padding: 10px 12px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(255, 242, 234, 0.9), rgba(255, 251, 247, 0.9));
+        }
+
+        .section-action-btn {
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(217, 111, 84, 0.1);
+        }
+
+        .ingredient-row,
+        .oven-spec-row,
+        .step-row {
+            margin-bottom: 9px;
+        }
+
+        .btn-delete-row,
+        .btn-delete-cat {
+            border-radius: 10px;
+        }
+
+        .detail-tabs {
+            padding: 8px 12px 0;
+            border-bottom: 0;
+            background: rgba(255, 253, 250, 0.72);
+        }
+
+        .detail-tab-btn {
+            height: 42px;
+            border-bottom: 0;
+            border-radius: 14px 14px 0 0;
+        }
+
+        .detail-tab-btn.active {
+            background: #FFF2EA;
+            color: #70463B;
+            box-shadow: 0 -8px 20px rgba(126, 77, 59, 0.06);
+        }
+
+        .detail-img {
+            height: 190px;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 34% 26%, rgba(255, 255, 255, 0.86), transparent 4rem),
+                linear-gradient(135deg, #F6C8A6, #E38B72 58%, #9D5B4A);
+            box-shadow: 0 18px 40px rgba(126, 77, 59, 0.14);
+        }
+
+        .detail-header-card {
+            border: 1px solid rgba(133, 83, 69, 0.08);
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(217, 111, 84, 0.16), transparent 8rem),
+                linear-gradient(135deg, rgba(255, 246, 239, 0.96), rgba(255, 253, 250, 0.96));
+            box-shadow: 0 18px 40px rgba(126, 77, 59, 0.1);
+        }
+
+        .detail-title {
+            font-size: 22px;
+            line-height: 1.25;
+            text-wrap: balance;
+        }
+
+        .detail-yield-info {
+            border-bottom-color: rgba(133, 83, 69, 0.11);
+        }
+
+        .detail-spec-row-item,
+        .detail-ing-item,
+        .detail-step-item,
+        .detail-note-list {
+            border-radius: 16px;
+            background-color: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(133, 83, 69, 0.08);
+            box-shadow: 0 8px 20px rgba(126, 77, 59, 0.05);
+        }
+
+        .detail-section {
+            margin-bottom: 26px;
+        }
+
+        .detail-section h3 {
+            margin-bottom: 12px;
+            border-left: 0;
+            padding-left: 0;
+            font-size: 16px;
+        }
+
+        .detail-ing-list {
+            gap: 9px;
+        }
+
+        .detail-ing-item {
+            align-items: center;
+            padding: 11px 13px;
+            border-bottom: 0;
+        }
+
+        .detail-ing-item span:last-child {
+            color: #B85542;
+            font-weight: 700;
+        }
+
+        .detail-step-list {
+            gap: 10px;
+        }
+
+        .detail-step-item {
+            padding: 13px;
+            line-height: 1.55;
+        }
+
+        .detail-step-num {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #855345, #D96F54);
+        }
+
+        .detail-note-list {
+            gap: 10px;
+            padding: 14px;
+            border-left: 0;
+            background: #FFF7D8;
+        }
+
+        .baking-mode-container {
+            padding: 18px;
+            background:
+                radial-gradient(circle at 10% 0%, rgba(255, 236, 219, 0.96), transparent 12rem),
+                linear-gradient(180deg, #FFF7EF, #F7E7DA);
+        }
+
+        .baking-card-view {
+            border-radius: 28px;
+            padding: 26px 24px;
+            border: 1px solid rgba(133, 83, 69, 0.09);
+            background:
+                radial-gradient(circle at 100% 0%, rgba(217, 111, 84, 0.13), transparent 9rem),
+                #FFFDFC;
+            box-shadow: 0 24px 48px rgba(126, 77, 59, 0.13);
+        }
+
+        .baking-card-header {
+            width: fit-content;
+            padding: 7px 11px;
+            border-radius: 999px;
+            background: #FFF1E6;
+            color: #70463B;
+        }
+
+        .baking-card-text {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: 0;
+            text-wrap: pretty;
+        }
+
+        .baking-timer-container {
+            border-radius: 20px;
+            background: #FFF1E6;
+            box-shadow: 0 12px 28px rgba(126, 77, 59, 0.08) inset;
+        }
+
+        .timer-display {
+            min-width: 68px;
+            font-size: 22px;
+        }
+
+        .timer-btn {
+            border-radius: 12px;
+            box-shadow: 0 8px 18px rgba(133, 83, 69, 0.18);
+        }
+
+        .baking-progress-bar {
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(133, 83, 69, 0.13);
+            overflow: hidden;
+        }
+
+        .baking-progress-fill {
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #855345, #D96F54, #F0B27E);
+            transition: width 0.24s ease;
+        }
+
+        .baking-nav-btn {
+            height: 52px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #855345, #D96F54);
+            box-shadow: 0 16px 30px rgba(133, 83, 69, 0.2);
+        }
+
+        .baking-nav-btn.secondary {
+            background: rgba(255, 255, 255, 0.88);
+        }
+
+        .modal-overlay {
+            background-color: rgba(44, 29, 24, 0.44);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            border-radius: 26px;
+            background:
+                radial-gradient(circle at 100% 0%, rgba(217, 111, 84, 0.12), transparent 8rem),
+                #FFFDFC;
+            box-shadow: 0 28px 70px rgba(44, 29, 24, 0.28);
+        }
+
+        .category-manage-row {
+            border-radius: 14px;
+            background-color: #FFF5EC;
+        }
+
+        .modal-btn {
+            border-radius: 13px;
+            background: linear-gradient(135deg, #855345, #D96F54);
+        }
+
+        @media (max-width: 500px) {
+            body {
+                background:
+                    radial-gradient(circle at top left, rgba(255, 226, 206, 0.42), transparent 24rem),
+                    var(--bg-color);
+            }
+
+            .simulator-container {
+                height: 100dvh;
+                border: 0;
+                border-radius: 0;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .home-scroll,
+            .detail-scroll,
+            .edit-form,
+            .baking-mode-container {
+                padding: 14px;
+            }
+
+            .recipe-grid {
+                gap: 10px;
+            }
+
+            .recipe-card {
+                min-height: 182px;
+                border-radius: 18px;
+            }
+
+            .recipe-card-img {
+                height: 98px;
+            }
+
+            .recipe-card-info {
+                padding: 10px;
+            }
+
+            .recipe-card-title {
+                font-size: 14px;
+            }
+
+            .baking-card-text {
+                font-size: 19px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="simulator-container">
-        <div class="app-content">
+<div class="simulator-container">
+    <div class="app-content">
 
-            <!-- [1] HOME PAGE -->
-            <div class="page active" id="homePage">
-                <div class="nav-bar">
-                    <h1>🥖 나의 오븐 레시피</h1>
-                </div>
-                
-                <div class="home-scroll">
-                    <!-- 검색바 -->
-                    <div class="search-container">
-                        <input type="text" class="search-input" id="homeSearch" placeholder="레시피 제목 또는 재료 검색" oninput="renderRecipes()">
-                    </div>
-
-                    <!-- 카테고리 필터 및 설정 관리 버튼 -->
-                    <div class="categories-filter-wrapper">
-                        <div class="categories-filter" id="categoryFilterContainer">
-                            <!-- JS에서 렌더링 -->
-                        </div>
-                        <button class="btn-manage-categories" onclick="openCategoryModal()" title="카테고리 관리">⚙️</button>
-                    </div>
-
-                    <!-- 즐겨찾기 필터 -->
-                    <div class="favorites-bar">
-                        <span>❤️ 즐겨찾는 레시피만 모아보기</span>
-                        <label class="switch">
-                            <input type="checkbox" id="favoriteToggle" onchange="renderRecipes()">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-
-                    <!-- 레시피 카드 목록 그리드 -->
-                    <div class="recipe-grid" id="recipeGridContainer">
-                        <!-- JS에서 카드 생성 -->
-                    </div>
-                </div>
-
-                <!-- 플로팅 액션 추가 버튼 -->
-                <button class="fab-add" onclick="openNewRecipe()">+</button>
+        <!-- [1] HOME PAGE -->
+        <div class="page active" id="homePage">
+            <div class="nav-bar">
+                <h1>🥖 나의 오븐 레시피</h1>
             </div>
 
-            <!-- [2] EDIT / UPLOAD PAGE -->
-            <div class="page" id="editPage">
-                <div class="nav-bar">
-                    <button class="nav-btn" onclick="navigateTo('homePage')">취소</button>
-                    <h1 id="editPageTitle">새 레시피 등록</h1>
-                    <button class="nav-btn" id="btnSaveRecipe" onclick="saveRecipeData()">저장</button>
+            <div class="home-scroll">
+                <!-- 검색바 -->
+                <div class="search-container">
+                    <input type="text" class="search-input" id="homeSearch" placeholder="레시피 제목 또는 재료 검색" oninput="renderRecipes()">
                 </div>
 
-                <div class="edit-container">
-                    <!-- 이미지 올리기 & OCR 라이브 텍스트 시뮬레이터 -->
-                    <div class="live-text-wrapper">
-                        <span class="ocr-hint">💡 단어들을 차례대로 클릭해 나만의 완전한 문장으로 조립해 보세요.</span>
-                        
-                        <div class="ocr-canvas-container" id="ocrCanvasContainer" onclick="triggerFileSelect()">
-                            <div id="ocrPrompt" style="text-align: center;">
-                                <span style="font-size: 30px;">📸</span>
-                                <p style="font-size: 11px; font-weight: 600; color: var(--primary-color); margin-top: 6px;">
-                                    요리책이나 손글씨 사진 올리기
-                                </p>
-                            </div>
-                            <img id="ocrPreviewImg" style="display: none;" alt="레시피 미리보기">
-                            
-                            <div class="ocr-text-overlay" id="ocrTextOverlay"></div>
-
-                            <div class="ocr-status-overlay" id="ocrStatusOverlay">
-                                <div class="spinner"></div>
-                                <span id="ocrStatusText">이미지 텍스트 읽는 중...</span>
-                            </div>
-                        </div>
-                        
-                        <input type="file" id="recipePhotoInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
-
-                        <div class="clipboard-widget">
-                            <span style="font-size: 11px; font-weight: bold; color: var(--primary-color); flex-shrink:0;">누적 단어들:</span>
-                            <div class="clipboard-text" id="clipboardTextBuffer">비어있음</div>
-                            <button class="btn-clear-buffer" onclick="clearOcrBuffer()">비우기 ❌</button>
-                        </div>
+                <!-- 카테고리 필터 및 설정 관리 버튼 -->
+                <div class="categories-filter-wrapper">
+                    <div class="categories-filter" id="categoryFilterContainer">
+                        <!-- JS에서 렌더링 -->
                     </div>
+                    <button class="btn-manage-categories" onclick="openCategoryModal()" title="카테고리 관리">⚙️</button>
+                </div>
 
-                    <!-- 폼 입력 영역 -->
-                    <div class="edit-form">
-                        <div class="form-group">
-                            <label>레시피 제목 *</label>
-                            <input type="text" class="form-input" id="formTitle" placeholder="예: 소금빵, 초코 식빵">
-                        </div>
+                <!-- 즐겨찾기 필터 -->
+                <div class="favorites-bar">
+                    <span>❤️ 즐겨찾는 레시피만 모아보기</span>
+                    <label class="switch">
+                        <input type="checkbox" id="favoriteToggle" onchange="renderRecipes()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
 
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>카테고리</label>
-                                <select class="form-input" id="formCategory">
-                                    <!-- 카테고리 동적 주입 -->
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>난이도</label>
-                                <select class="form-input" id="formDifficulty">
-                                    <option value="하">하</option>
-                                    <option value="중" selected>중</option>
-                                    <option value="상">상</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>완성 분량</label>
-                            <input type="text" class="form-input" id="formYield" placeholder="예: 6개 분량, 1호 크기 1개">
-                        </div>
-
-                        <!-- 🌟 오븐 굽기 사양 (롤백 단순화: 단일 온도 칸) -->
-                        <div>
-                            <div class="form-section-header">
-                                <h3>🔥 오븐 굽기 사양</h3>
-                                <div style="display: flex; gap: 8px;">
-                                    <button class="section-action-btn" id="btnPasteOven" onclick="pasteOvenFromBuffer()" disabled>
-                                        ➕ 선택글 매핑
-                                    </button>
-                                    <button class="section-action-btn" onclick="addOvenSpecRow()">
-                                        ➕ 사양 추가
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="ovenSpecsListContainer">
-                                <!-- 동적 오븐 사양 로우 생성 -->
-                            </div>
-                        </div>
-
-                        <!-- 재료 리스트 -->
-                        <div>
-                            <div class="form-section-header">
-                                <h3>🥣 재료 리스트</h3>
-                                <div style="display: flex; gap: 8px;">
-                                    <button class="section-action-btn" id="btnPasteIng" onclick="pasteIngredientFromBuffer()" disabled>
-                                        ➕ 선택글 매핑
-                                    </button>
-                                    <button class="section-action-btn" onclick="addIngredientRow()">
-                                        ➕ 수동 추가
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="ingredientsListContainer">
-                                <!-- 재료 로우 동적 생성 -->
-                            </div>
-                        </div>
-
-                        <!-- 공정 리스트 -->
-                        <div>
-                            <div class="form-section-header">
-                                <h3>👩‍🍳 조리 과정 (공정)</h3>
-                                <div style="display: flex; gap: 8px;">
-                                    <button class="section-action-btn" id="btnPasteStep" onclick="pasteStepFromBuffer()" disabled>
-                                        ➕ 선택글 매핑
-                                    </button>
-                                    <button class="section-action-btn" onclick="addStepRow()">
-                                        ➕ 수동 추가
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="stepsListContainer">
-                                <!-- 공정 단계 동적 생성 -->
-                            </div>
-                        </div>
-
-                        <!-- 참고사항 리스트 -->
-                        <div>
-                            <div class="form-section-header">
-                                <h3>📝 참고사항 및 팁</h3>
-                                <div style="display: flex; gap: 8px;">
-                                    <button class="section-action-btn" id="btnPasteNote" onclick="pasteNoteFromBuffer()" disabled>
-                                        ➕ 선택글 매핑
-                                    </button>
-                                    <button class="section-action-btn" onclick="addNoteRow()">
-                                        ➕ 수동 추가
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="notesListContainer">
-                                <!-- 참고사항 동적 생성 -->
-                            </div>
-                        </div>
-                    </div>
+                <!-- 레시피 카드 목록 그리드 -->
+                <div class="recipe-grid" id="recipeGridContainer">
+                    <!-- JS에서 카드 생성 -->
                 </div>
             </div>
 
-            <!-- [3] DETAIL PAGE -->
-            <div class="page" id="detailPage">
-                <div class="nav-bar">
-                    <button class="nav-btn" onclick="navigateTo('homePage')">⬅️ 목록</button>
-                    <h1 id="detailNavTitle">레시피 정보</h1>
-                    <div style="display: flex; gap: 8px;">
-                        <button class="nav-btn" style="color: #D32F2F;" onclick="deleteRecipe()">삭제 🗑️</button>
-                        <button class="nav-btn" id="btnEditRecipe" onclick="openEditRecipe()">편집</button>
-                    </div>
-                </div>
-
-                <div class="detail-tabs">
-                    <button class="detail-tab-btn active" id="tabInfoBtn" onclick="switchDetailTab(0)">📋 정보 요약</button>
-                    <button class="detail-tab-btn" id="tabBakeBtn" onclick="switchDetailTab(1)">🥖 베이킹 모드</button>
-                </div>
-
-                <!-- 일반 정보 탭 내용 -->
-                <div class="detail-scroll" id="detailInfoTabContent">
-                    <div class="detail-img" id="detailViewImg"></div>
-
-                    <div class="detail-header-card">
-                        <div class="detail-title-row">
-                            <h2 class="detail-title" id="detailViewTitle">초코칩 쿠키</h2>
-                            <button class="nav-btn" id="btnToggleFavDetail" style="font-size: 20px; padding: 0 4px;" onclick="toggleFavoriteDetail()">❤️</button>
-                        </div>
-                        
-                        <div class="detail-yield-info">
-                            완성 분량: <span id="detailViewYield">-</span> (난이도: <span id="detailViewDifficulty">-</span>)
-                        </div>
-
-                        <!-- 롤백 단순화된 동적 오븐 스펙 리스트 -->
-                        <div class="detail-spec-list-card" id="detailViewSpecList">
-                            <!-- 동적 스펙 행 렌더링 -->
-                        </div>
-                    </div>
-
-                    <!-- 재료 요약 -->
-                    <div class="detail-section">
-                        <h3>필요 재료</h3>
-                        <div class="detail-ing-list" id="detailViewIngList">
-                            <!-- 동적 생성 -->
-                        </div>
-                    </div>
-
-                    <!-- 공정 요약 -->
-                    <div class="detail-section">
-                        <h3>조리 순서</h3>
-                        <div class="detail-step-list" id="detailViewStepList">
-                            <!-- 동적 생성 -->
-                        </div>
-                    </div>
-
-                    <!-- 참고사항 요약 -->
-                    <div class="detail-section" id="detailViewNoteSection">
-                        <h3>참고사항 & 팁</h3>
-                        <div class="detail-note-list" id="detailViewNoteList">
-                            <!-- 동적 생성 -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 베이킹 집중 모드 탭 내용 -->
-                <div class="baking-mode-container" id="detailBakingTabContent" style="display: none;">
-                    
-                    <div class="baking-card-outer">
-                        <div class="baking-card-view">
-                            <div class="baking-card-header" id="bakingStepHeader">Step 1</div>
-                            <div class="baking-card-text" id="bakingStepText">
-                                볼에 실온 상태의 버터를 부드럽게 풀고 설탕을 넣어 섞습니다.
-                            </div>
-                            
-                            <div class="baking-timer-container">
-                                <span style="font-size: 13px;">⏱️ 타이머</span>
-                                <span class="timer-display" id="timerDisplay">00:00</span>
-                                <button class="timer-btn" id="timerStartBtn" onclick="toggleTimer()">시작</button>
-                                <button class="timer-btn" style="background-color: #9E9E9E;" onclick="resetTimer()">리셋</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="baking-controls-wrapper">
-                        <div class="baking-progress-bar">
-                            <div class="baking-progress-fill" id="bakingProgressFill"></div>
-                        </div>
-                        <div class="baking-nav-buttons">
-                            <button class="baking-nav-btn secondary" id="btnBakingPrev" onclick="navigateBakingStep(-1)">이전 단계</button>
-                            <button class="baking-nav-btn" id="btnBakingNext" onclick="navigateBakingStep(1)">다음 단계</button>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
+            <!-- 플로팅 액션 추가 버튼 -->
+            <button class="fab-add" onclick="openNewRecipe()">+</button>
         </div>
 
-        <!-- iOS 카테고리 관리 모달 창 -->
-        <div class="modal-overlay" id="categoryModal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>🏷️ 카테고리 추가 및 관리</h2>
-                    <button class="nav-btn" style="font-size:18px;" onclick="closeCategoryModal()">×</button>
+        <!-- [2] EDIT / UPLOAD PAGE -->
+        <div class="page" id="editPage">
+            <div class="nav-bar">
+                <button class="nav-btn" onclick="navigateTo('homePage')">취소</button>
+                <h1 id="editPageTitle">새 레시피 등록</h1>
+                <button class="nav-btn" id="btnSaveRecipe" onclick="saveRecipeData()">저장</button>
+            </div>
+
+            <div class="edit-container">
+                <!-- 이미지 올리기 & OCR 라이브 텍스트 시뮬레이터 -->
+                <div class="live-text-wrapper">
+                    <span class="ocr-hint">💡 단어들을 차례대로 클릭해 나만의 완전한 문장으로 조립해 보세요.</span>
+
+                    <div class="ocr-canvas-container" id="ocrCanvasContainer" onclick="triggerFileSelect()">
+                        <div id="ocrPrompt" style="text-align: center;">
+                            <span style="font-size: 30px;">📸</span>
+                            <p style="font-size: 11px; font-weight: 600; color: var(--primary-color); margin-top: 6px;">
+                                요리책이나 손글씨 사진 올리기
+                            </p>
+                        </div>
+                        <img id="ocrPreviewImg" style="display: none;" alt="레시피 미리보기">
+
+                        <div class="ocr-text-overlay" id="ocrTextOverlay"></div>
+
+                        <div class="ocr-status-overlay" id="ocrStatusOverlay">
+                            <div class="spinner"></div>
+                            <span id="ocrStatusText">이미지 텍스트 읽는 중...</span>
+                        </div>
+                    </div>
+
+                    <input type="file" id="recipePhotoInput" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+
+                    <div class="clipboard-widget">
+                        <span style="font-size: 11px; font-weight: bold; color: var(--primary-color); flex-shrink:0;">누적 단어들:</span>
+                        <div class="clipboard-text" id="clipboardTextBuffer">비어있음</div>
+                        <button class="btn-clear-buffer" onclick="clearOcrBuffer()">비우기 ❌</button>
+                    </div>
                 </div>
-                <div class="modal-body" id="categoryModalList">
-                    <!-- 카테고리 목록 동적 렌더링 -->
+
+                <!-- 폼 입력 영역 -->
+                <div class="edit-form">
+                    <div class="form-group">
+                        <label>레시피 제목 *</label>
+                        <input type="text" class="form-input" id="formTitle" placeholder="예: 소금빵, 초코 식빵">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>카테고리</label>
+                            <select class="form-input" id="formCategory">
+                                <!-- 카테고리 동적 주입 -->
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>난이도</label>
+                            <select class="form-input" id="formDifficulty">
+                                <option value="하">하</option>
+                                <option value="중" selected>중</option>
+                                <option value="상">상</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>완성 분량</label>
+                        <input type="text" class="form-input" id="formYield" placeholder="예: 6개 분량, 1호 크기 1개">
+                    </div>
+
+                    <!-- 🌟 오븐 굽기 사양 (롤백 단순화: 단일 온도 칸) -->
+                    <div>
+                        <div class="form-section-header">
+                            <h3>🔥 오븐 굽기 사양</h3>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="section-action-btn" id="btnPasteOven" onclick="pasteOvenFromBuffer()" disabled>
+                                    ➕ 선택글 매핑
+                                </button>
+                                <button class="section-action-btn" onclick="addOvenSpecRow()">
+                                    ➕ 사양 추가
+                                </button>
+                            </div>
+                        </div>
+                        <div id="ovenSpecsListContainer">
+                            <!-- 동적 오븐 사양 로우 생성 -->
+                        </div>
+                    </div>
+
+                    <!-- 재료 리스트 -->
+                    <div>
+                        <div class="form-section-header">
+                            <h3>🥣 재료 리스트</h3>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="section-action-btn" id="btnPasteIng" onclick="pasteIngredientFromBuffer()" disabled>
+                                    ➕ 선택글 매핑
+                                </button>
+                                <button class="section-action-btn" onclick="addIngredientRow()">
+                                    ➕ 수동 추가
+                                </button>
+                            </div>
+                        </div>
+                        <div id="ingredientsListContainer">
+                            <!-- 재료 로우 동적 생성 -->
+                        </div>
+                    </div>
+
+                    <!-- 공정 리스트 -->
+                    <div>
+                        <div class="form-section-header">
+                            <h3>👩‍🍳 조리 과정 (공정)</h3>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="section-action-btn" id="btnPasteStep" onclick="pasteStepFromBuffer()" disabled>
+                                    ➕ 선택글 매핑
+                                </button>
+                                <button class="section-action-btn" onclick="addStepRow()">
+                                    ➕ 수동 추가
+                                </button>
+                            </div>
+                        </div>
+                        <div id="stepsListContainer">
+                            <!-- 공정 단계 동적 생성 -->
+                        </div>
+                    </div>
+
+                    <!-- 참고사항 리스트 -->
+                    <div>
+                        <div class="form-section-header">
+                            <h3>📝 참고사항 및 팁</h3>
+                            <div style="display: flex; gap: 8px;">
+                                <button class="section-action-btn" id="btnPasteNote" onclick="pasteNoteFromBuffer()" disabled>
+                                    ➕ 선택글 매핑
+                                </button>
+                                <button class="section-action-btn" onclick="addNoteRow()">
+                                    ➕ 수동 추가
+                                </button>
+                            </div>
+                        </div>
+                        <div id="notesListContainer">
+                            <!-- 참고사항 동적 생성 -->
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <input type="text" class="modal-input" id="newCategoryInput" placeholder="새 카테고리명 입력">
-                    <button class="modal-btn" onclick="addNewCategory()">추가</button>
+            </div>
+        </div>
+
+        <!-- [3] DETAIL PAGE -->
+        <div class="page" id="detailPage">
+            <div class="nav-bar">
+                <button class="nav-btn" onclick="navigateTo('homePage')">목록</button>
+                <h1 id="detailNavTitle">레시피 정보</h1>
+                <div style="display: flex; gap: 8px;">
+                    <button class="nav-btn" style="color: #D32F2F;" onclick="deleteRecipe()">삭제️</button>
+                    <button class="nav-btn" id="btnEditRecipe" onclick="openEditRecipe()">편집</button>
                 </div>
+            </div>
+
+            <div class="detail-tabs">
+                <button class="detail-tab-btn active" id="tabInfoBtn" onclick="switchDetailTab(0)">📋 정보 요약</button>
+                <button class="detail-tab-btn" id="tabBakeBtn" onclick="switchDetailTab(1)">🥖 베이킹 모드</button>
+            </div>
+
+            <!-- 일반 정보 탭 내용 -->
+            <div class="detail-scroll" id="detailInfoTabContent">
+                <div class="detail-img" id="detailViewImg"></div>
+
+                <div class="detail-header-card">
+                    <div class="detail-title-row">
+                        <h2 class="detail-title" id="detailViewTitle">초코칩 쿠키</h2>
+                        <button class="nav-btn" id="btnToggleFavDetail" style="font-size: 20px; padding: 0 4px;" onclick="toggleFavoriteDetail()">❤️</button>
+                    </div>
+
+                    <div class="detail-yield-info">
+                        완성 분량: <span id="detailViewYield">-</span> (난이도: <span id="detailViewDifficulty">-</span>)
+                    </div>
+
+                    <!-- 롤백 단순화된 동적 오븐 스펙 리스트 -->
+                    <div class="detail-spec-list-card" id="detailViewSpecList">
+                        <!-- 동적 스펙 행 렌더링 -->
+                    </div>
+                </div>
+
+                <!-- 재료 요약 -->
+                <div class="detail-section">
+                    <h3>필요 재료</h3>
+                    <div class="detail-ing-list" id="detailViewIngList">
+                        <!-- 동적 생성 -->
+                    </div>
+                </div>
+
+                <!-- 공정 요약 -->
+                <div class="detail-section">
+                    <h3>조리 순서</h3>
+                    <div class="detail-step-list" id="detailViewStepList">
+                        <!-- 동적 생성 -->
+                    </div>
+                </div>
+
+                <!-- 참고사항 요약 -->
+                <div class="detail-section" id="detailViewNoteSection">
+                    <h3>참고사항 & 팁</h3>
+                    <div class="detail-note-list" id="detailViewNoteList">
+                        <!-- 동적 생성 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 베이킹 집중 모드 탭 내용 -->
+            <div class="baking-mode-container" id="detailBakingTabContent" style="display: none;">
+
+                <div class="baking-card-outer">
+                    <div class="baking-card-view">
+                        <div class="baking-card-header" id="bakingStepHeader">Step 1</div>
+                        <div class="baking-card-text" id="bakingStepText">
+                            볼에 실온 상태의 버터를 부드럽게 풀고 설탕을 넣어 섞습니다.
+                        </div>
+
+                        <div class="baking-timer-container">
+                            <span style="font-size: 13px;">⏱️ 타이머</span>
+                            <span class="timer-display" id="timerDisplay">00:00</span>
+                            <button class="timer-btn" id="timerStartBtn" onclick="toggleTimer()">시작</button>
+                            <button class="timer-btn" style="background-color: #9E9E9E;" onclick="resetTimer()">리셋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="baking-controls-wrapper">
+                    <div class="baking-progress-bar">
+                        <div class="baking-progress-fill" id="bakingProgressFill"></div>
+                    </div>
+                    <div class="baking-nav-buttons">
+                        <button class="baking-nav-btn secondary" id="btnBakingPrev" onclick="navigateBakingStep(-1)">이전 단계</button>
+                        <button class="baking-nav-btn" id="btnBakingNext" onclick="navigateBakingStep(1)">다음 단계</button>
+                    </div>
+                </div>
+
             </div>
         </div>
 
     </div>
 
-    <!-- ==================== JAVASCRIPT ==================== -->
-    <script>
-        let dbRecipes = JSON.parse(localStorage.getItem('recipes')) || getMockRecipes();
-        let dbCategories = JSON.parse(localStorage.getItem('categories')) || ["식빵", "구움과자", "케이크", "타르트", "디저트", "기타"];
-        
-        let currentRecipeId = null;
-        let selectedCategoryFilter = "전체";
-        let selectedOcrText = ""; 
-        let uploadedImageBase64 = null;
-        
-        let currentBakingStepIdx = 0;
-        let bakingStepsArray = [];
-        let timerInterval = null;
-        let timerSeconds = 0;
+    <!-- iOS 카테고리 관리 모달 창 -->
+    <div class="modal-overlay" id="categoryModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🏷️ 카테고리 추가 및 관리</h2>
+                <button class="nav-btn" style="font-size:18px;" onclick="closeCategoryModal()">×</button>
+            </div>
+            <div class="modal-body" id="categoryModalList">
+                <!-- 카테고리 목록 동적 렌더링 -->
+            </div>
+            <div class="modal-footer">
+                <input type="text" class="modal-input" id="newCategoryInput" placeholder="새 카테고리명 입력">
+                <button class="modal-btn" onclick="addNewCategory()">추가</button>
+            </div>
+        </div>
+    </div>
 
-        function getMockRecipes() {
-            const mocks = [
-                {
-                    id: "recipe-1",
-                    title: "바삭 촉촉 소금빵",
-                    category: "식빵",
-                    imageData: "",
-                    difficulty: "상",
-                    yield: "8개 분량",
-                    bakingSpecs: [
-                        { sequence: 1, temp: "210", time: "15" }
-                    ],
-                    ingredients: [
-                        { name: "강력분", amount: "250", unit: "g" },
-                        { name: "드라이이스트", amount: "4", unit: "g" },
-                        { name: "물", amount: "155", unit: "g" },
-                        { name: "버터(반죽용)", amount: "15", unit: "g" },
-                        { name: "무염버터(롤인용)", amount: "80", unit: "g" },
-                        { name: "펄솔트", amount: "적당량", unit: "" }
-                    ],
-                    steps: [
-                        { sequence: 1, instruction: "물에 이스트를 풀고 강력분, 소금과 함께 섞어 반죽을 뭉칩니다." },
-                        { sequence: 2, instruction: "반죽이 뭉쳐지면 실온 버터를 넣고 매끄럽게 글루텐이 잡힐 때까지 치댑니다." },
-                        { sequence: 3, instruction: "반죽을 따뜻한 곳에서 1시간 동안 1차 발효를 해줍니다." },
-                        { sequence: 4, instruction: "발효가 완료되면 반죽을 8등분하여 둥글리기 한 뒤 15분간 벤치타임을 가집니다." },
-                        { sequence: 5, instruction: "반죽을 긴 올챙이 모양으로 밀어 편 뒤 무염버터 조각을 넣고 돌돌 말아 성형합니다." },
-                        { sequence: 6, instruction: "따뜻한 온도에서 2차 발효를 40분 진행합니다. 완료 전 윗면에 물을 뿌리고 펄솔트를 올립니다." },
-                        { sequence: 7, instruction: "210도 예열된 오븐에 스팀을 넣어 15분간 노릇하게 굽습니다." }
-                    ],
-                    notes: [
-                        { sequence: 1, text: "오븐 예열 시 실제 내부 온도를 오븐 온도계로 꼭 확인해 주세요." },
-                        { sequence: 2, text: "펄솔트는 구우면서 떨어지기 쉬우므로, 물을 충분히 분무하고 꾹 눌러서 올려야 합니다." }
-                    ],
-                    isFavorite: true,
-                    createdDate: new Date(Date.now() - 3600000).toISOString()
-                },
-                {
-                    id: "recipe-2",
-                    title: "얼그레이 피칸 휘낭시에",
-                    category: "구움과자",
-                    imageData: "",
-                    difficulty: "중",
-                    yield: "12개 분량",
-                    bakingSpecs: [
-                        { sequence: 1, temp: "190", time: "12" }
-                    ],
-                    ingredients: [
-                        { name: "계란 흰자", amount: "100", unit: "g" },
-                        { name: "헤이즐넛 버터", amount: "100", unit: "g" },
-                        { name: "박력분", amount: "40", unit: "g" },
-                        { name: "아몬드가루", amount: "50", unit: "g" },
-                        { name: "설탕", amount: "90", unit: "g" },
-                        { name: "얼그레이 티백", amount: "1", unit: "개" },
-                        { name: "구운 피칸", amount: "적당량", unit: "" }
-                    ],
-                    steps: [
-                        { sequence: 1, instruction: "냄비에 버터를 올리고 태워 갈색 빛의 헤이즐넛 버터를 만든 뒤 체에 걸러식힙니다." },
-                        { sequence: 2, instruction: "흰자에 설탕을 넣고 거품이 나지 않도록 가볍게 저어 풉니다." },
-                        { sequence: 3, instruction: "체 친 박력분, 아몬드가루, 얼그레이 찻잎을 흰자에 넣고 섞어줍니다." },
-                        { sequence: 4, instruction: "식혀둔 버터를 반죽에 3번에 걸쳐 넣으며 매끄러운 반죽을 완성합니다." },
-                        { sequence: 5, instruction: "완성된 반죽을 냉장고에서 최소 1시간 동안 휴지시킵니다." },
-                        { sequence: 6, instruction: "틀에 버터를 바르고 팬닝한 뒤 구운 피칸 조각을 올려 장식합니다." },
-                        { sequence: 7, instruction: "190도 오븐에서 12분간 구워준 후 틀에서 바로 꺼내 식힘망에 식힙니다." }
-                    ],
-                    notes: [
-                        { sequence: 1, text: "버터를 태울 때 너무 오래 끓이면 버터량이 줄어들어 퍽퍽해질 수 있으니 갈색 찌꺼기가 가라앉기 시작하면 불을 꺼야 합니다." }
-                    ],
-                    isFavorite: false,
-                    createdDate: new Date().toISOString()
-                }
-            ];
-            localStorage.setItem('recipes', JSON.stringify(mocks));
-            return mocks;
-        }
+</div>
 
-        function navigateTo(pageId) {
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-            resetTimer();
-        }
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+    let dbRecipes = JSON.parse(localStorage.getItem('recipes')) || getMockRecipes();
+    let dbCategories = JSON.parse(localStorage.getItem('categories')) || ["식빵", "구움과자", "케이크", "타르트", "디저트", "기타"];
 
-        // ==================== [CATEGORY LOGIC] ====================
-        function renderCategoryChips() {
-            const container = document.getElementById('categoryFilterContainer');
-            const viewCategories = ["전체", ...dbCategories];
-            container.innerHTML = viewCategories.map(cat => `
+    let currentRecipeId = null;
+    let selectedCategoryFilter = "전체";
+    let selectedOcrText = "";
+    let uploadedImageBase64 = null;
+
+    let currentBakingStepIdx = 0;
+    let bakingStepsArray = [];
+    let timerInterval = null;
+    let timerSeconds = 0;
+
+    function getMockRecipes() {
+        const mocks = [
+            {
+                id: "recipe-1",
+                title: "바삭 촉촉 소금빵",
+                category: "식빵",
+                imageData: "",
+                difficulty: "상",
+                yield: "8개 분량",
+                bakingSpecs: [
+                    { sequence: 1, temp: "210", time: "15" }
+                ],
+                ingredients: [
+                    { name: "강력분", amount: "250", unit: "g" },
+                    { name: "드라이이스트", amount: "4", unit: "g" },
+                    { name: "물", amount: "155", unit: "g" },
+                    { name: "버터(반죽용)", amount: "15", unit: "g" },
+                    { name: "무염버터(롤인용)", amount: "80", unit: "g" },
+                    { name: "펄솔트", amount: "적당량", unit: "" }
+                ],
+                steps: [
+                    { sequence: 1, instruction: "물에 이스트를 풀고 강력분, 소금과 함께 섞어 반죽을 뭉칩니다." },
+                    { sequence: 2, instruction: "반죽이 뭉쳐지면 실온 버터를 넣고 매끄럽게 글루텐이 잡힐 때까지 치댑니다." },
+                    { sequence: 3, instruction: "반죽을 따뜻한 곳에서 1시간 동안 1차 발효를 해줍니다." },
+                    { sequence: 4, instruction: "발효가 완료되면 반죽을 8등분하여 둥글리기 한 뒤 15분간 벤치타임을 가집니다." },
+                    { sequence: 5, instruction: "반죽을 긴 올챙이 모양으로 밀어 편 뒤 무염버터 조각을 넣고 돌돌 말아 성형합니다." },
+                    { sequence: 6, instruction: "따뜻한 온도에서 2차 발효를 40분 진행합니다. 완료 전 윗면에 물을 뿌리고 펄솔트를 올립니다." },
+                    { sequence: 7, instruction: "210도 예열된 오븐에 스팀을 넣어 15분간 노릇하게 굽습니다." }
+                ],
+                notes: [
+                    { sequence: 1, text: "오븐 예열 시 실제 내부 온도를 오븐 온도계로 꼭 확인해 주세요." },
+                    { sequence: 2, text: "펄솔트는 구우면서 떨어지기 쉬우므로, 물을 충분히 분무하고 꾹 눌러서 올려야 합니다." }
+                ],
+                isFavorite: true,
+                createdDate: new Date(Date.now() - 3600000).toISOString()
+            },
+            {
+                id: "recipe-2",
+                title: "얼그레이 피칸 휘낭시에",
+                category: "구움과자",
+                imageData: "",
+                difficulty: "중",
+                yield: "12개 분량",
+                bakingSpecs: [
+                    { sequence: 1, temp: "190", time: "12" }
+                ],
+                ingredients: [
+                    { name: "계란 흰자", amount: "100", unit: "g" },
+                    { name: "헤이즐넛 버터", amount: "100", unit: "g" },
+                    { name: "박력분", amount: "40", unit: "g" },
+                    { name: "아몬드가루", amount: "50", unit: "g" },
+                    { name: "설탕", amount: "90", unit: "g" },
+                    { name: "얼그레이 티백", amount: "1", unit: "개" },
+                    { name: "구운 피칸", amount: "적당량", unit: "" }
+                ],
+                steps: [
+                    { sequence: 1, instruction: "냄비에 버터를 올리고 태워 갈색 빛의 헤이즐넛 버터를 만든 뒤 체에 걸러식힙니다." },
+                    { sequence: 2, instruction: "흰자에 설탕을 넣고 거품이 나지 않도록 가볍게 저어 풉니다." },
+                    { sequence: 3, instruction: "체 친 박력분, 아몬드가루, 얼그레이 찻잎을 흰자에 넣고 섞어줍니다." },
+                    { sequence: 4, instruction: "식혀둔 버터를 반죽에 3번에 걸쳐 넣으며 매끄러운 반죽을 완성합니다." },
+                    { sequence: 5, instruction: "완성된 반죽을 냉장고에서 최소 1시간 동안 휴지시킵니다." },
+                    { sequence: 6, instruction: "틀에 버터를 바르고 팬닝한 뒤 구운 피칸 조각을 올려 장식합니다." },
+                    { sequence: 7, instruction: "190도 오븐에서 12분간 구워준 후 틀에서 바로 꺼내 식힘망에 식힙니다." }
+                ],
+                notes: [
+                    { sequence: 1, text: "버터를 태울 때 너무 오래 끓이면 버터량이 줄어들어 퍽퍽해질 수 있으니 갈색 찌꺼기가 가라앉기 시작하면 불을 꺼야 합니다." }
+                ],
+                isFavorite: false,
+                createdDate: new Date().toISOString()
+            }
+        ];
+        localStorage.setItem('recipes', JSON.stringify(mocks));
+        return mocks;
+    }
+
+    function navigateTo(pageId) {
+        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        resetTimer();
+    }
+
+    // ==================== [CATEGORY LOGIC] ====================
+    function renderCategoryChips() {
+        const container = document.getElementById('categoryFilterContainer');
+        const viewCategories = ["전체", ...dbCategories];
+        container.innerHTML = viewCategories.map(cat => `
                 <button class="category-chip ${selectedCategoryFilter === cat ? 'active' : ''}" onclick="filterCategory('${cat}')">
                     ${cat}
                 </button>
             `).join('');
-        }
+    }
 
-        function filterCategory(category) {
-            selectedCategoryFilter = category;
-            renderCategoryChips();
-            renderRecipes();
-        }
+    function filterCategory(category) {
+        selectedCategoryFilter = category;
+        renderCategoryChips();
+        renderRecipes();
+    }
 
-        function renderFormCategoryDropdown(selectedValue = "구움과자") {
-            const select = document.getElementById('formCategory');
-            select.innerHTML = dbCategories.map(cat => `
+    function renderFormCategoryDropdown(selectedValue = "구움과자") {
+        const select = document.getElementById('formCategory');
+        select.innerHTML = dbCategories.map(cat => `
                 <option value="${cat}" ${cat === selectedValue ? 'selected' : ''}>${cat}</option>
             `).join('');
-        }
+    }
 
-        function openCategoryModal() {
-            const modal = document.getElementById('categoryModal');
-            const list = document.getElementById('categoryModalList');
-            list.innerHTML = dbCategories.map((cat, idx) => `
+    function openCategoryModal() {
+        const modal = document.getElementById('categoryModal');
+        const list = document.getElementById('categoryModalList');
+        list.innerHTML = dbCategories.map((cat, idx) => `
                 <div class="category-manage-row">
                     <span>${cat}</span>
-                    <button class="btn-delete-cat" onclick="deleteCategory(${idx})">삭제 🗑️</button>
+                    <button class="btn-delete-cat" onclick="deleteCategory(${idx})">🗑️</button>
                 </div>
             `).join('');
-            modal.style.display = 'flex';
+        modal.style.display = 'flex';
+    }
+
+    function closeCategoryModal() {
+        document.getElementById('categoryModal').style.display = 'none';
+    }
+
+    function addNewCategory() {
+        const input = document.getElementById('newCategoryInput');
+        const name = input.value.trim();
+        if (!name) return;
+
+        if (dbCategories.includes(name)) {
+            alert("이미 존재하는 카테고리입니다.");
+            return;
         }
 
-        function closeCategoryModal() {
-            document.getElementById('categoryModal').style.display = 'none';
+        dbCategories.push(name);
+        localStorage.setItem('categories', JSON.stringify(dbCategories));
+        input.value = "";
+        renderCategoryChips();
+        openCategoryModal();
+    }
+
+    function deleteCategory(index) {
+        if (dbCategories.length <= 1) {
+            alert("최소 한 개 이상의 카테고리가 존재해야 합니다.");
+            return;
         }
-
-        function addNewCategory() {
-            const input = document.getElementById('newCategoryInput');
-            const name = input.value.trim();
-            if (!name) return;
-
-            if (dbCategories.includes(name)) {
-                alert("이미 존재하는 카테고리입니다.");
-                return;
-            }
-
-            dbCategories.push(name);
+        if (confirm(`'${dbCategories[index]}' 카테고리를 정말 삭제하시겠습니까?`)) {
+            dbCategories.splice(index, 1);
             localStorage.setItem('categories', JSON.stringify(dbCategories));
-            input.value = "";
             renderCategoryChips();
-            openCategoryModal(); 
+            openCategoryModal();
+        }
+    }
+
+    // ==================== [HOME PAGE LOGIC] ====================
+    function renderRecipes() {
+        const container = document.getElementById('recipeGridContainer');
+        const searchVal = document.getElementById('homeSearch').value.trim().toLowerCase();
+        const onlyFavs = document.getElementById('favoriteToggle').checked;
+
+        const filtered = dbRecipes.filter(recipe => {
+            const matchesSearch = !searchVal ||
+                recipe.title.toLowerCase().includes(searchVal) ||
+                recipe.ingredients.some(ing => ing.name.toLowerCase().includes(searchVal));
+
+            const matchesCategory = selectedCategoryFilter === "전체" || recipe.category === selectedCategoryFilter;
+            const matchesFav = !onlyFavs || recipe.isFavorite;
+
+            return matchesSearch && matchesCategory && matchesFav;
+        });
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<div style="grid-column: span 2; text-align: center; color: var(--text-secondary); padding: 40px 0; font-size:12px;">등록된 레시피가 없습니다.</div>`;
+            return;
         }
 
-        function deleteCategory(index) {
-            if (dbCategories.length <= 1) {
-                alert("최소 한 개 이상의 카테고리가 존재해야 합니다.");
-                return;
-            }
-            if (confirm(`'${dbCategories[index]}' 카테고리를 정말 삭제하시겠습니까?`)) {
-                dbCategories.splice(index, 1);
-                localStorage.setItem('categories', JSON.stringify(dbCategories));
-                renderCategoryChips();
-                openCategoryModal();
-            }
-        }
+        container.innerHTML = filtered.map(recipe => {
+            const imgStyle = recipe.imageData ? `style="background-image: url('${recipe.imageData}')"` : '';
+            const firstSpec = (recipe.bakingSpecs && recipe.bakingSpecs.length > 0) ? recipe.bakingSpecs[0] : null;
+            const specText = firstSpec ? `${firstSpec.temp}℃` : '-';
+            const timeText = firstSpec ? `${firstSpec.time}분` : '-';
 
-        // ==================== [HOME PAGE LOGIC] ====================
-        function renderRecipes() {
-            const container = document.getElementById('recipeGridContainer');
-            const searchVal = document.getElementById('homeSearch').value.trim().toLowerCase();
-            const onlyFavs = document.getElementById('favoriteToggle').checked;
-
-            const filtered = dbRecipes.filter(recipe => {
-                const matchesSearch = !searchVal || 
-                    recipe.title.toLowerCase().includes(searchVal) ||
-                    recipe.ingredients.some(ing => ing.name.toLowerCase().includes(searchVal));
-                
-                const matchesCategory = selectedCategoryFilter === "전체" || recipe.category === selectedCategoryFilter;
-                const matchesFav = !onlyFavs || recipe.isFavorite;
-
-                return matchesSearch && matchesCategory && matchesFav;
-            });
-
-            if (filtered.length === 0) {
-                container.innerHTML = `<div style="grid-column: span 2; text-align: center; color: var(--text-secondary); padding: 40px 0; font-size:12px;">등록된 레시피가 없습니다.</div>`;
-                return;
-            }
-
-            container.innerHTML = filtered.map(recipe => {
-                const imgStyle = recipe.imageData ? `style="background-image: url('${recipe.imageData}')"` : '';
-                const firstSpec = (recipe.bakingSpecs && recipe.bakingSpecs.length > 0) ? recipe.bakingSpecs[0] : null;
-                const specText = firstSpec ? `${firstSpec.temp}℃` : '-';
-                const timeText = firstSpec ? `${firstSpec.time}분` : '-';
-
-                return `
+            return `
                     <div class="recipe-card" onclick="viewRecipeDetail('${recipe.id}')">
                         <div class="recipe-card-img" ${imgStyle}>
                             <span class="recipe-card-badge">${recipe.category}</span>
@@ -1556,158 +2208,158 @@
                         </div>
                     </div>
                 `;
-            }).join('');
-        }
+        }).join('');
+    }
 
-        // ==================== [EDIT & UPLOAD PAGE LOGIC] ====================
-        function openNewRecipe() {
-            currentRecipeId = null;
-            document.getElementById('editPageTitle').innerText = "새 레시피 등록";
-            
-            document.getElementById('formTitle').value = "";
-            renderFormCategoryDropdown("구움과자");
-            document.getElementById('formDifficulty').value = "중";
-            document.getElementById('formYield').value = "";
-            
-            document.getElementById('ovenSpecsListContainer').innerHTML = "";
-            document.getElementById('ingredientsListContainer').innerHTML = "";
-            document.getElementById('stepsListContainer').innerHTML = "";
-            document.getElementById('notesListContainer').innerHTML = "";
-            
-            resetOcrPreview();
-            
-            navigateTo('editPage');
-            addOvenSpecRow(); 
-            addIngredientRow();
-            addStepRow();
-            addNoteRow(); 
-        }
+    // ==================== [EDIT & UPLOAD PAGE LOGIC] ====================
+    function openNewRecipe() {
+        currentRecipeId = null;
+        document.getElementById('editPageTitle').innerText = "새 레시피 등록";
 
-        function triggerFileSelect() {
-            document.getElementById('recipePhotoInput').click();
-        }
+        document.getElementById('formTitle').value = "";
+        renderFormCategoryDropdown("구움과자");
+        document.getElementById('formDifficulty').value = "중";
+        document.getElementById('formYield').value = "";
 
-        function resetOcrPreview() {
-            document.getElementById('ocrPrompt').style.display = 'block';
-            document.getElementById('ocrPreviewImg').style.display = 'none';
-            document.getElementById('ocrPreviewImg').src = "";
-            document.getElementById('ocrTextOverlay').innerHTML = "";
-            uploadedImageBase64 = null;
-            clearOcrBuffer();
-        }
+        document.getElementById('ovenSpecsListContainer').innerHTML = "";
+        document.getElementById('ingredientsListContainer').innerHTML = "";
+        document.getElementById('stepsListContainer').innerHTML = "";
+        document.getElementById('notesListContainer').innerHTML = "";
 
-        function clearOcrBuffer() {
-            selectedOcrText = "";
-            updateClipboardText("");
-        }
+        resetOcrPreview();
 
-        function handleImageUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+        navigateTo('editPage');
+        addOvenSpecRow();
+        addIngredientRow();
+        addStepRow();
+        addNoteRow();
+    }
 
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                uploadedImageBase64 = e.target.result;
-                
-                document.getElementById('ocrPrompt').style.display = 'none';
-                const previewImg = document.getElementById('ocrPreviewImg');
-                previewImg.src = uploadedImageBase64;
-                previewImg.style.display = 'block';
-                
-                const statusOverlay = document.getElementById('ocrStatusOverlay');
-                statusOverlay.style.display = 'flex';
-                
-                Tesseract.recognize(
-                    file,
-                    'kor+eng', 
-                    { logger: m => console.log(m) }
-                ).then(({ data: { words } }) => {
-                    renderOcrWordBoxes(words, previewImg);
-                }).catch(err => {
-                    console.error(err);
-                    alert("글자 판독 중 오류가 발생했습니다. 수동 입력을 진행해 주세요.");
-                }).finally(() => {
-                    statusOverlay.style.display = 'none';
-                });
-            };
-            reader.readAsDataURL(file);
-        }
+    function triggerFileSelect() {
+        document.getElementById('recipePhotoInput').click();
+    }
 
-        function renderOcrWordBoxes(words, imgElement) {
-            const overlay = document.getElementById('ocrTextOverlay');
-            overlay.innerHTML = "";
-            
-            const viewWidth = imgElement.clientWidth;
-            const viewHeight = imgElement.clientHeight;
-            const naturalWidth = imgElement.naturalWidth;
-            const naturalHeight = imgElement.naturalHeight;
-            
-            const scaleX = viewWidth / naturalWidth;
-            const scaleY = viewHeight / naturalHeight;
-            
-            const containerRect = document.getElementById('ocrCanvasContainer').getBoundingClientRect();
-            const imgRect = imgElement.getBoundingClientRect();
-            
-            const offsetX = imgRect.left - containerRect.left;
-            const offsetY = imgRect.top - containerRect.top;
+    function resetOcrPreview() {
+        document.getElementById('ocrPrompt').style.display = 'block';
+        document.getElementById('ocrPreviewImg').style.display = 'none';
+        document.getElementById('ocrPreviewImg').src = "";
+        document.getElementById('ocrTextOverlay').innerHTML = "";
+        uploadedImageBase64 = null;
+        clearOcrBuffer();
+    }
 
-            words.forEach((word) => {
-                if (word.confidence < 25) return;
-                
-                const box = word.bbox;
-                const div = document.createElement('div');
-                div.className = 'ocr-word-box';
-                div.style.left = `${box.x0 * scaleX + offsetX}px`;
-                div.style.top = `${box.y0 * scaleY + offsetY}px`;
-                div.style.width = `${(box.x1 - box.x0) * scaleX}px`;
-                div.style.height = `${(box.y1 - box.y0) * scaleY}px`;
-                
-                div.onclick = (e) => {
-                    e.stopPropagation();
-                    div.classList.add('selected');
-                    
-                    const cleanedText = word.text.trim();
-                    if (selectedOcrText === "") {
-                        selectedOcrText = cleanedText;
-                    } else {
-                        selectedOcrText += " " + cleanedText;
-                    }
-                    
-                    updateClipboardText(selectedOcrText);
-                };
-                
-                overlay.appendChild(div);
+    function clearOcrBuffer() {
+        selectedOcrText = "";
+        updateClipboardText("");
+    }
+
+    function handleImageUpload(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            uploadedImageBase64 = e.target.result;
+
+            document.getElementById('ocrPrompt').style.display = 'none';
+            const previewImg = document.getElementById('ocrPreviewImg');
+            previewImg.src = uploadedImageBase64;
+            previewImg.style.display = 'block';
+
+            const statusOverlay = document.getElementById('ocrStatusOverlay');
+            statusOverlay.style.display = 'flex';
+
+            Tesseract.recognize(
+                file,
+                'kor+eng',
+                { logger: m => console.log(m) }
+            ).then(({ data: { words } }) => {
+                renderOcrWordBoxes(words, previewImg);
+            }).catch(err => {
+                console.error(err);
+                alert("글자 판독 중 오류가 발생했습니다. 수동 입력을 진행해 주세요.");
+            }).finally(() => {
+                statusOverlay.style.display = 'none';
             });
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function renderOcrWordBoxes(words, imgElement) {
+        const overlay = document.getElementById('ocrTextOverlay');
+        overlay.innerHTML = "";
+
+        const viewWidth = imgElement.clientWidth;
+        const viewHeight = imgElement.clientHeight;
+        const naturalWidth = imgElement.naturalWidth;
+        const naturalHeight = imgElement.naturalHeight;
+
+        const scaleX = viewWidth / naturalWidth;
+        const scaleY = viewHeight / naturalHeight;
+
+        const containerRect = document.getElementById('ocrCanvasContainer').getBoundingClientRect();
+        const imgRect = imgElement.getBoundingClientRect();
+
+        const offsetX = imgRect.left - containerRect.left;
+        const offsetY = imgRect.top - containerRect.top;
+
+        words.forEach((word) => {
+            if (word.confidence < 25) return;
+
+            const box = word.bbox;
+            const div = document.createElement('div');
+            div.className = 'ocr-word-box';
+            div.style.left = `${box.x0 * scaleX + offsetX}px`;
+            div.style.top = `${box.y0 * scaleY + offsetY}px`;
+            div.style.width = `${(box.x1 - box.x0) * scaleX}px`;
+            div.style.height = `${(box.y1 - box.y0) * scaleY}px`;
+
+            div.onclick = (e) => {
+                e.stopPropagation();
+                div.classList.add('selected');
+
+                const cleanedText = word.text.trim();
+                if (selectedOcrText === "") {
+                    selectedOcrText = cleanedText;
+                } else {
+                    selectedOcrText += " " + cleanedText;
+                }
+
+                updateClipboardText(selectedOcrText);
+            };
+
+            overlay.appendChild(div);
+        });
+    }
+
+    function updateClipboardText(text) {
+        const bufferView = document.getElementById('clipboardTextBuffer');
+        const btnOven = document.getElementById('btnPasteOven');
+        const btnIng = document.getElementById('btnPasteIng');
+        const btnStep = document.getElementById('btnPasteStep');
+        const btnNote = document.getElementById('btnPasteNote');
+
+        if (text) {
+            bufferView.innerText = text;
+            btnOven.disabled = false;
+            btnIng.disabled = false;
+            btnStep.disabled = false;
+            btnNote.disabled = false;
+        } else {
+            bufferView.innerText = "비어있음";
+            btnOven.disabled = true;
+            btnIng.disabled = true;
+            btnStep.disabled = true;
+            btnNote.disabled = true;
         }
+    }
 
-        function updateClipboardText(text) {
-            const bufferView = document.getElementById('clipboardTextBuffer');
-            const btnOven = document.getElementById('btnPasteOven');
-            const btnIng = document.getElementById('btnPasteIng');
-            const btnStep = document.getElementById('btnPasteStep');
-            const btnNote = document.getElementById('btnPasteNote');
-
-            if (text) {
-                bufferView.innerText = text;
-                btnOven.disabled = false;
-                btnIng.disabled = false;
-                btnStep.disabled = false;
-                btnNote.disabled = false;
-            } else {
-                bufferView.innerText = "비어있음";
-                btnOven.disabled = true;
-                btnIng.disabled = true;
-                btnStep.disabled = true;
-                btnNote.disabled = true;
-            }
-        }
-
-        // 🌟 오븐 사양 단순 단일 폼 행 추가 (온도, 시간)
-        function addOvenSpecRow(temp = "", time = "") {
-            const container = document.getElementById('ovenSpecsListContainer');
-            const row = document.createElement('div');
-            row.className = 'oven-spec-row';
-            row.innerHTML = `
+    // 🌟 오븐 사양 단순 단일 폼 행 추가 (온도, 시간)
+    function addOvenSpecRow(temp = "", time = "") {
+        const container = document.getElementById('ovenSpecsListContainer');
+        const row = document.createElement('div');
+        row.className = 'oven-spec-row';
+        row.innerHTML = `
                 <div class="spec-temp-box">
                     <input type="number" class="form-input oven-temp" placeholder="온도" value="${temp}">
                     <span style="font-size:11px">℃</span>
@@ -1718,410 +2370,410 @@
                 </div>
                 <button class="btn-delete-row" onclick="this.parentElement.remove()">×</button>
             `;
-            container.appendChild(row);
-        }
+        container.appendChild(row);
+    }
 
-        function addIngredientRow(name = "", amount = "", unit = "g") {
-            const container = document.getElementById('ingredientsListContainer');
-            const row = document.createElement('div');
-            row.className = 'ingredient-row';
-            row.innerHTML = `
+    function addIngredientRow(name = "", amount = "", unit = "g") {
+        const container = document.getElementById('ingredientsListContainer');
+        const row = document.createElement('div');
+        row.className = 'ingredient-row';
+        row.innerHTML = `
                 <input type="text" class="form-input ing-name" placeholder="재료명" value="${name}">
                 <input type="text" class="form-input ing-amount" placeholder="양" value="${amount}">
                 <input type="text" class="form-input ing-unit" placeholder="g" value="${unit}">
                 <button class="btn-delete-row" onclick="this.parentElement.remove()">×</button>
             `;
-            container.appendChild(row);
-        }
+        container.appendChild(row);
+    }
 
-        function addStepRow(instruction = "") {
-            const container = document.getElementById('stepsListContainer');
-            const currentCount = container.children.length;
-            const seq = currentCount + 1;
-            const row = document.createElement('div');
-            row.className = 'step-row';
-            row.innerHTML = `
+    function addStepRow(instruction = "") {
+        const container = document.getElementById('stepsListContainer');
+        const currentCount = container.children.length;
+        const seq = currentCount + 1;
+        const row = document.createElement('div');
+        row.className = 'step-row';
+        row.innerHTML = `
                 <span class="step-num">${seq}</span>
                 <textarea class="step-textarea" placeholder="과정 설명을 입력하세요">${instruction}</textarea>
                 <button class="btn-delete-row" style="padding-top:12px" onclick="removeStepRow(this)">×</button>
             `;
-            container.appendChild(row);
-        }
+        container.appendChild(row);
+    }
 
-        function removeStepRow(btn) {
-            btn.parentElement.remove();
-            const container = document.getElementById('stepsListContainer');
-            Array.from(container.children).forEach((row, idx) => {
-                row.querySelector('.step-num').innerText = idx + 1;
-            });
-        }
+    function removeStepRow(btn) {
+        btn.parentElement.remove();
+        const container = document.getElementById('stepsListContainer');
+        Array.from(container.children).forEach((row, idx) => {
+            row.querySelector('.step-num').innerText = idx + 1;
+        });
+    }
 
-        function addNoteRow(text = "") {
-            const container = document.getElementById('notesListContainer');
-            const row = document.createElement('div');
-            row.className = 'step-row'; 
-            row.innerHTML = `
+    function addNoteRow(text = "") {
+        const container = document.getElementById('notesListContainer');
+        const row = document.createElement('div');
+        row.className = 'step-row';
+        row.innerHTML = `
                 <span class="step-num" style="color:var(--accent-color)">•</span>
                 <textarea class="step-textarea" placeholder="예: 구운 뒤 식힘망에서 바로 꺼내야 눅눅해지지 않습니다.">${text}</textarea>
                 <button class="btn-delete-row" style="padding-top:12px" onclick="this.parentElement.remove()">×</button>
             `;
-            container.appendChild(row);
-        }
+        container.appendChild(row);
+    }
 
-        // 🌟 오븐 단순 사양 매핑
-        function pasteOvenFromBuffer() {
-            if (!selectedOcrText) return;
-            const numbers = selectedOcrText.match(/[0-9]+/g);
-            
-            let temp = "";
-            let time = "";
+    // 🌟 오븐 단순 사양 매핑
+    function pasteOvenFromBuffer() {
+        if (!selectedOcrText) return;
+        const numbers = selectedOcrText.match(/[0-9]+/g);
 
-            if (numbers) {
-                if (numbers.length >= 2) {
-                    temp = numbers[0];
-                    time = numbers[1];
-                } else {
-                    temp = numbers[0];
-                }
+        let temp = "";
+        let time = "";
+
+        if (numbers) {
+            if (numbers.length >= 2) {
+                temp = numbers[0];
+                time = numbers[1];
+            } else {
+                temp = numbers[0];
             }
-
-            addOvenSpecRow(temp, time);
-            document.querySelectorAll('.ocr-word-box').forEach(b => b.classList.remove('selected'));
-            clearOcrBuffer();
         }
 
-        function pasteIngredientFromBuffer() {
-            if (!selectedOcrText) return;
-            
-            const text = selectedOcrText.trim();
-            const numberMatch = text.match(/[0-9]+(?:[\./][0-9]+)?/);
-            
-            let name = text;
-            let amount = "";
-            let unit = "g";
+        addOvenSpecRow(temp, time);
+        document.querySelectorAll('.ocr-word-box').forEach(b => b.classList.remove('selected'));
+        clearOcrBuffer();
+    }
 
-            if (numberMatch) {
-                amount = numberMatch[0];
-                const numIdx = text.indexOf(amount);
-                
-                name = text.substring(0, numIdx).trim();
-                const unitCandidate = text.substring(numIdx + amount.length).trim();
-                if (unitCandidate) {
-                    unit = unitCandidate;
-                }
+    function pasteIngredientFromBuffer() {
+        if (!selectedOcrText) return;
+
+        const text = selectedOcrText.trim();
+        const numberMatch = text.match(/[0-9]+(?:[\./][0-9]+)?/);
+
+        let name = text;
+        let amount = "";
+        let unit = "g";
+
+        if (numberMatch) {
+            amount = numberMatch[0];
+            const numIdx = text.indexOf(amount);
+
+            name = text.substring(0, numIdx).trim();
+            const unitCandidate = text.substring(numIdx + amount.length).trim();
+            if (unitCandidate) {
+                unit = unitCandidate;
             }
-
-            addIngredientRow(name, amount, unit);
-            document.querySelectorAll('.ocr-word-box').forEach(b => b.classList.remove('selected'));
-            clearOcrBuffer();
         }
 
-        function pasteStepFromBuffer() {
-            if (!selectedOcrText) return;
-            addStepRow(selectedOcrText);
-            document.querySelectorAll('.ocr-word-box').forEach(b => b.classList.remove('selected'));
-            clearOcrBuffer();
+        addIngredientRow(name, amount, unit);
+        document.querySelectorAll('.ocr-word-box').forEach(b => b.classList.remove('selected'));
+        clearOcrBuffer();
+    }
+
+    function pasteStepFromBuffer() {
+        if (!selectedOcrText) return;
+        addStepRow(selectedOcrText);
+        document.querySelectorAll('.ocr-word-box').forEach(b => b.classList.remove('selected'));
+        clearOcrBuffer();
+    }
+
+    function pasteNoteFromBuffer() {
+        if (!selectedOcrText) return;
+        addNoteRow(selectedOcrText);
+        document.querySelectorAll('.ocr-word-box').forEach(b => b.classList.remove('selected'));
+        clearOcrBuffer();
+    }
+
+    function saveRecipeData() {
+        const title = document.getElementById('formTitle').value.trim();
+        if (!title) {
+            alert("레시피 제목은 필수 항목입니다.");
+            return;
         }
 
-        function pasteNoteFromBuffer() {
-            if (!selectedOcrText) return;
-            addNoteRow(selectedOcrText);
-            document.querySelectorAll('.ocr-word-box').forEach(b => b.classList.remove('selected'));
-            clearOcrBuffer();
-        }
-
-        function saveRecipeData() {
-            const title = document.getElementById('formTitle').value.trim();
-            if (!title) {
-                alert("레시피 제목은 필수 항목입니다.");
-                return;
-            }
-
-            // 오븐 단순 사양 파싱
-            const specRows = document.querySelectorAll('#ovenSpecsListContainer .oven-spec-row');
-            const bakingSpecs = Array.from(specRows).map((row, idx) => {
-                return {
-                    sequence: idx + 1,
-                    temp: row.querySelector('.oven-temp').value.trim(),
-                    time: row.querySelector('.oven-time').value.trim()
-                };
-            }).filter(item => item.temp !== "" || item.time !== "");
-
-            const ingRows = document.querySelectorAll('#ingredientsListContainer .ingredient-row');
-            const ingredients = Array.from(ingRows).map(row => {
-                return {
-                    name: row.querySelector('.ing-name').value.trim(),
-                    amount: row.querySelector('.ing-amount').value.trim(),
-                    unit: row.querySelector('.ing-unit').value.trim()
-                };
-            }).filter(item => item.name !== "");
-
-            const stepRows = document.querySelectorAll('#stepsListContainer .step-row');
-            const steps = Array.from(stepRows).map((row, idx) => {
-                return {
-                    sequence: idx + 1,
-                    instruction: row.querySelector('.step-textarea').value.trim()
-                };
-            }).filter(item => item.instruction !== "");
-
-            const noteRows = document.querySelectorAll('#notesListContainer .step-row');
-            const notes = Array.from(noteRows).map((row, idx) => {
-                return {
-                    sequence: idx + 1,
-                    text: row.querySelector('.step-textarea').value.trim()
-                };
-            }).filter(item => item.text !== "");
-
-            const recipeData = {
-                id: currentRecipeId || 'recipe-' + Date.now(),
-                title: title,
-                category: document.getElementById('formCategory').value,
-                difficulty: document.getElementById('formDifficulty').value,
-                yield: document.getElementById('formYield').value.trim(),
-                bakingSpecs: bakingSpecs,
-                ingredients: ingredients,
-                steps: steps,
-                notes: notes,
-                imageData: uploadedImageBase64 || "",
-                isFavorite: currentRecipeId ? (dbRecipes.find(r => r.id === currentRecipeId)?.isFavorite || false) : false,
-                createdDate: currentRecipeId ? (dbRecipes.find(r => r.id === currentRecipeId)?.createdDate || new Date().toISOString()) : new Date().toISOString()
+        // 오븐 단순 사양 파싱
+        const specRows = document.querySelectorAll('#ovenSpecsListContainer .oven-spec-row');
+        const bakingSpecs = Array.from(specRows).map((row, idx) => {
+            return {
+                sequence: idx + 1,
+                temp: row.querySelector('.oven-temp').value.trim(),
+                time: row.querySelector('.oven-time').value.trim()
             };
+        }).filter(item => item.temp !== "" || item.time !== "");
 
-            if (currentRecipeId) {
-                const idx = dbRecipes.findIndex(r => r.id === currentRecipeId);
-                dbRecipes[idx] = recipeData;
-            } else {
-                dbRecipes.unshift(recipeData);
-            }
+        const ingRows = document.querySelectorAll('#ingredientsListContainer .ingredient-row');
+        const ingredients = Array.from(ingRows).map(row => {
+            return {
+                name: row.querySelector('.ing-name').value.trim(),
+                amount: row.querySelector('.ing-amount').value.trim(),
+                unit: row.querySelector('.ing-unit').value.trim()
+            };
+        }).filter(item => item.name !== "");
 
-            localStorage.setItem('recipes', JSON.stringify(dbRecipes));
-            renderRecipes();
-            navigateTo('homePage');
+        const stepRows = document.querySelectorAll('#stepsListContainer .step-row');
+        const steps = Array.from(stepRows).map((row, idx) => {
+            return {
+                sequence: idx + 1,
+                instruction: row.querySelector('.step-textarea').value.trim()
+            };
+        }).filter(item => item.instruction !== "");
+
+        const noteRows = document.querySelectorAll('#notesListContainer .step-row');
+        const notes = Array.from(noteRows).map((row, idx) => {
+            return {
+                sequence: idx + 1,
+                text: row.querySelector('.step-textarea').value.trim()
+            };
+        }).filter(item => item.text !== "");
+
+        const recipeData = {
+            id: currentRecipeId || 'recipe-' + Date.now(),
+            title: title,
+            category: document.getElementById('formCategory').value,
+            difficulty: document.getElementById('formDifficulty').value,
+            yield: document.getElementById('formYield').value.trim(),
+            bakingSpecs: bakingSpecs,
+            ingredients: ingredients,
+            steps: steps,
+            notes: notes,
+            imageData: uploadedImageBase64 || "",
+            isFavorite: currentRecipeId ? (dbRecipes.find(r => r.id === currentRecipeId)?.isFavorite || false) : false,
+            createdDate: currentRecipeId ? (dbRecipes.find(r => r.id === currentRecipeId)?.createdDate || new Date().toISOString()) : new Date().toISOString()
+        };
+
+        if (currentRecipeId) {
+            const idx = dbRecipes.findIndex(r => r.id === currentRecipeId);
+            dbRecipes[idx] = recipeData;
+        } else {
+            dbRecipes.unshift(recipeData);
         }
 
-        // ==================== [DETAIL PAGE LOGIC] ====================
-        function viewRecipeDetail(id) {
-            currentRecipeId = id;
-            const recipe = dbRecipes.find(r => r.id === id);
-            if (!recipe) return;
+        localStorage.setItem('recipes', JSON.stringify(dbRecipes));
+        renderRecipes();
+        navigateTo('homePage');
+    }
 
-            document.getElementById('detailNavTitle').innerText = recipe.title;
-            document.getElementById('detailViewTitle').innerText = recipe.title;
-            document.getElementById('detailViewYield').innerText = recipe.yield || '-';
-            document.getElementById('detailViewDifficulty').innerText = recipe.difficulty || '중';
+    // ==================== [DETAIL PAGE LOGIC] ====================
+    function viewRecipeDetail(id) {
+        currentRecipeId = id;
+        const recipe = dbRecipes.find(r => r.id === id);
+        if (!recipe) return;
 
-            const imgDiv = document.getElementById('detailViewImg');
-            if (recipe.imageData) {
-                imgDiv.style.backgroundImage = `url('${recipe.imageData}')`;
-                imgDiv.style.display = 'block';
-            } else {
-                imgDiv.style.display = 'none';
-            }
+        document.getElementById('detailNavTitle').innerText = recipe.title;
+        document.getElementById('detailViewTitle').innerText = recipe.title;
+        document.getElementById('detailViewYield').innerText = recipe.yield || '-';
+        document.getElementById('detailViewDifficulty').innerText = recipe.difficulty || '중';
 
-            const favBtn = document.getElementById('btnToggleFavDetail');
-            favBtn.innerText = recipe.isFavorite ? '❤️' : '🤍';
+        const imgDiv = document.getElementById('detailViewImg');
+        if (recipe.imageData) {
+            imgDiv.style.backgroundImage = `url('${recipe.imageData}')`;
+            imgDiv.style.display = 'block';
+        } else {
+            imgDiv.style.display = 'none';
+        }
 
-            // 🌟 오븐 단순 스펙 리스트 렌더링 (단계 텍스트 제거)
-            const specList = document.getElementById('detailViewSpecList');
-            if (recipe.bakingSpecs && recipe.bakingSpecs.length > 0) {
-                specList.innerHTML = recipe.bakingSpecs.map(spec => {
-                    return `
+        const favBtn = document.getElementById('btnToggleFavDetail');
+        favBtn.innerText = recipe.isFavorite ? '❤️' : '🤍';
+
+        // 🌟 오븐 단순 스펙 리스트 렌더링 (단계 텍스트 제거)
+        const specList = document.getElementById('detailViewSpecList');
+        if (recipe.bakingSpecs && recipe.bakingSpecs.length > 0) {
+            specList.innerHTML = recipe.bakingSpecs.map(spec => {
+                return `
                         <div class="detail-spec-row-item" style="justify-content: flex-start; gap: 16px;">
-                            <span class="temp-text">🔥 ${spec.temp}℃</span> 
+                            <span class="temp-text">🔥 ${spec.temp}℃</span>
                             <span style="color:var(--text-secondary); font-weight: 600;">⏱️ ${spec.time}분</span>
                         </div>
                     `;
-                }).join('');
-            } else {
-                specList.innerHTML = `<div style="font-size:11px; color:var(--text-secondary)">지정된 오븐 사양이 없습니다.</div>`;
-            }
+            }).join('');
+        } else {
+            specList.innerHTML = `<div style="font-size:11px; color:var(--text-secondary)">지정된 오븐 사양이 없습니다.</div>`;
+        }
 
-            const ingList = document.getElementById('detailViewIngList');
-            ingList.innerHTML = recipe.ingredients.map(ing => `
+        const ingList = document.getElementById('detailViewIngList');
+        ingList.innerHTML = recipe.ingredients.map(ing => `
                 <div class="detail-ing-item">
                     <span>${ing.name}</span>
                     <span>${ing.amount} ${ing.unit}</span>
                 </div>
             `).join('');
 
-            const stepList = document.getElementById('detailViewStepList');
-            stepList.innerHTML = recipe.steps.map(step => `
+        const stepList = document.getElementById('detailViewStepList');
+        stepList.innerHTML = recipe.steps.map(step => `
                 <div class="detail-step-item">
                     <div class="detail-step-num">${step.sequence}</div>
                     <div>${step.instruction}</div>
                 </div>
             `).join('');
 
-            const noteList = document.getElementById('detailViewNoteList');
-            const noteSection = document.getElementById('detailViewNoteSection');
-            if (recipe.notes && recipe.notes.length > 0) {
-                noteSection.style.display = 'block';
-                noteList.innerHTML = recipe.notes.map(note => `
+        const noteList = document.getElementById('detailViewNoteList');
+        const noteSection = document.getElementById('detailViewNoteSection');
+        if (recipe.notes && recipe.notes.length > 0) {
+            noteSection.style.display = 'block';
+            noteList.innerHTML = recipe.notes.map(note => `
                     <div class="detail-note-item">📌 ${note.text}</div>
                 `).join('');
-            } else {
-                noteSection.style.display = 'none';
-            }
-
-            bakingStepsArray = recipe.steps.sort((a,b) => a.sequence - b.sequence);
-            currentBakingStepIdx = 0;
-            updateBakingStepView();
-
-            switchDetailTab(0);
-            navigateTo('detailPage');
+        } else {
+            noteSection.style.display = 'none';
         }
 
-        function deleteRecipe() {
-            const recipe = dbRecipes.find(r => r.id === currentRecipeId);
-            if (!recipe) return;
+        bakingStepsArray = recipe.steps.sort((a,b) => a.sequence - b.sequence);
+        currentBakingStepIdx = 0;
+        updateBakingStepView();
 
-            if (confirm(`'${recipe.title}' 레시피를 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.`)) {
-                dbRecipes = dbRecipes.filter(r => r.id !== currentRecipeId);
-                localStorage.setItem('recipes', JSON.stringify(dbRecipes));
-                renderRecipes();
-                navigateTo('homePage');
-            }
-        }
+        switchDetailTab(0);
+        navigateTo('detailPage');
+    }
 
-        function switchDetailTab(tabIdx) {
-            const btnInfo = document.getElementById('tabInfoBtn');
-            const btnBake = document.getElementById('tabBakeBtn');
-            const tabInfo = document.getElementById('detailInfoTabContent');
-            const tabBake = document.getElementById('detailBakingTabContent');
+    function deleteRecipe() {
+        const recipe = dbRecipes.find(r => r.id === currentRecipeId);
+        if (!recipe) return;
 
-            if (tabIdx === 0) {
-                btnInfo.classList.add('active');
-                btnBake.classList.remove('active');
-                tabInfo.style.display = 'block';
-                tabBake.style.display = 'none';
-            } else {
-                btnInfo.classList.remove('active');
-                btnBake.classList.add('active');
-                tabInfo.style.display = 'none';
-                tabBake.style.display = 'flex';
-            }
-        }
-
-        function toggleFavoriteDetail() {
-            const recipe = dbRecipes.find(r => r.id === currentRecipeId);
-            if (!recipe) return;
-            recipe.isFavorite = !recipe.isFavorite;
+        if (confirm(`'${recipe.title}' 레시피를 삭제하시겠습니까? 삭제 후에는 복구할 수 없습니다.`)) {
+            dbRecipes = dbRecipes.filter(r => r.id !== currentRecipeId);
             localStorage.setItem('recipes', JSON.stringify(dbRecipes));
-            
-            document.getElementById('btnToggleFavDetail').innerText = recipe.isFavorite ? '❤️' : '🤍';
             renderRecipes();
+            navigateTo('homePage');
         }
+    }
 
-        function openEditRecipe() {
-            const recipe = dbRecipes.find(r => r.id === currentRecipeId);
-            if (!recipe) return;
+    function switchDetailTab(tabIdx) {
+        const btnInfo = document.getElementById('tabInfoBtn');
+        const btnBake = document.getElementById('tabBakeBtn');
+        const tabInfo = document.getElementById('detailInfoTabContent');
+        const tabBake = document.getElementById('detailBakingTabContent');
 
-            document.getElementById('editPageTitle').innerText = "레시피 수정";
-            
-            document.getElementById('formTitle').value = recipe.title;
-            renderFormCategoryDropdown(recipe.category);
-            document.getElementById('formDifficulty').value = recipe.difficulty;
-            document.getElementById('formYield').value = recipe.yield;
-            
-            // 오븐 굽기 사양 로드
-            const specContainer = document.getElementById('ovenSpecsListContainer');
-            specContainer.innerHTML = "";
-            if (recipe.bakingSpecs && recipe.bakingSpecs.length > 0) {
-                recipe.bakingSpecs.forEach(spec => {
-                    addOvenSpecRow(spec.temp, spec.time);
-                });
-            } else {
-                addOvenSpecRow();
-            }
-
-            const ingContainer = document.getElementById('ingredientsListContainer');
-            ingContainer.innerHTML = "";
-            recipe.ingredients.forEach(ing => {
-                addIngredientRow(ing.name, ing.amount, ing.unit);
-            });
-
-            const stepContainer = document.getElementById('stepsListContainer');
-            stepContainer.innerHTML = "";
-            recipe.steps.forEach(step => {
-                addStepRow(step.instruction);
-            });
-
-            const noteContainer = document.getElementById('notesListContainer');
-            noteContainer.innerHTML = "";
-            if (recipe.notes && recipe.notes.length > 0) {
-                recipe.notes.forEach(note => {
-                    addNoteRow(note.text);
-                });
-            } else {
-                addNoteRow();
-            }
-
-            navigateTo('editPage');
+        if (tabIdx === 0) {
+            btnInfo.classList.add('active');
+            btnBake.classList.remove('active');
+            tabInfo.style.display = 'block';
+            tabBake.style.display = 'none';
+        } else {
+            btnInfo.classList.remove('active');
+            btnBake.classList.add('active');
+            tabInfo.style.display = 'none';
+            tabBake.style.display = 'flex';
         }
+    }
 
-        // ==================== [BAKING MODE CONTROLLER] ====================
-        function updateBakingStepView() {
-            if (bakingStepsArray.length === 0) return;
-            
-            const step = bakingStepsArray[currentBakingStepIdx];
-            document.getElementById('bakingStepHeader').innerText = `Step ${step.sequence} / ${bakingStepsArray.length}`;
-            document.getElementById('bakingStepText').innerText = step.instruction;
+    function toggleFavoriteDetail() {
+        const recipe = dbRecipes.find(r => r.id === currentRecipeId);
+        if (!recipe) return;
+        recipe.isFavorite = !recipe.isFavorite;
+        localStorage.setItem('recipes', JSON.stringify(dbRecipes));
 
-            const percentage = ((currentBakingStepIdx + 1) / bakingStepsArray.length) * 100;
-            document.getElementById('bakingProgressFill').style.width = `${percentage}%`;
-
-            document.getElementById('btnBakingPrev').disabled = (currentBakingStepIdx === 0);
-            document.getElementById('btnBakingNext').innerText = (currentBakingStepIdx === bakingStepsArray.length - 1) ? "완료!" : "다음 단계";
-        }
-
-        function navigateBakingStep(direction) {
-            const nextIdx = currentBakingStepIdx + direction;
-            
-            if (nextIdx >= 0 && nextIdx < bakingStepsArray.length) {
-                currentBakingStepIdx = nextIdx;
-                updateBakingStepView();
-                resetTimer(); 
-            } else if (nextIdx === bakingStepsArray.length) {
-                alert("🎉 맛있는 베이킹을 축하합니다! 과정을 완료했습니다.");
-                navigateTo('homePage');
-            }
-        }
-
-        function toggleTimer() {
-            const btn = document.getElementById('timerStartBtn');
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                btn.innerText = "시작";
-            } else {
-                timerInterval = setInterval(() => {
-                    timerSeconds++;
-                    updateTimerDisplay();
-                }, 1000);
-                btn.innerText = "일시정지";
-            }
-        }
-
-        function resetTimer() {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-            timerSeconds = 0;
-            updateTimerDisplay();
-            document.getElementById('timerStartBtn').innerText = "시작";
-        }
-
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timerSeconds / 60);
-            const seconds = timerSeconds % 60;
-            const minStr = minutes < 10 ? '0' + minutes : minutes;
-            const secStr = seconds < 10 ? '0' + seconds : seconds;
-            document.getElementById('timerDisplay').innerText = `${minStr}:${secStr}`;
-        }
-
-        renderCategoryChips();
+        document.getElementById('btnToggleFavDetail').innerText = recipe.isFavorite ? '❤️' : '🤍';
         renderRecipes();
-    </script>
+    }
+
+    function openEditRecipe() {
+        const recipe = dbRecipes.find(r => r.id === currentRecipeId);
+        if (!recipe) return;
+
+        document.getElementById('editPageTitle').innerText = "레시피 수정";
+
+        document.getElementById('formTitle').value = recipe.title;
+        renderFormCategoryDropdown(recipe.category);
+        document.getElementById('formDifficulty').value = recipe.difficulty;
+        document.getElementById('formYield').value = recipe.yield;
+
+        // 오븐 굽기 사양 로드
+        const specContainer = document.getElementById('ovenSpecsListContainer');
+        specContainer.innerHTML = "";
+        if (recipe.bakingSpecs && recipe.bakingSpecs.length > 0) {
+            recipe.bakingSpecs.forEach(spec => {
+                addOvenSpecRow(spec.temp, spec.time);
+            });
+        } else {
+            addOvenSpecRow();
+        }
+
+        const ingContainer = document.getElementById('ingredientsListContainer');
+        ingContainer.innerHTML = "";
+        recipe.ingredients.forEach(ing => {
+            addIngredientRow(ing.name, ing.amount, ing.unit);
+        });
+
+        const stepContainer = document.getElementById('stepsListContainer');
+        stepContainer.innerHTML = "";
+        recipe.steps.forEach(step => {
+            addStepRow(step.instruction);
+        });
+
+        const noteContainer = document.getElementById('notesListContainer');
+        noteContainer.innerHTML = "";
+        if (recipe.notes && recipe.notes.length > 0) {
+            recipe.notes.forEach(note => {
+                addNoteRow(note.text);
+            });
+        } else {
+            addNoteRow();
+        }
+
+        navigateTo('editPage');
+    }
+
+    // ==================== [BAKING MODE CONTROLLER] ====================
+    function updateBakingStepView() {
+        if (bakingStepsArray.length === 0) return;
+
+        const step = bakingStepsArray[currentBakingStepIdx];
+        document.getElementById('bakingStepHeader').innerText = `Step ${step.sequence} / ${bakingStepsArray.length}`;
+        document.getElementById('bakingStepText').innerText = step.instruction;
+
+        const percentage = ((currentBakingStepIdx + 1) / bakingStepsArray.length) * 100;
+        document.getElementById('bakingProgressFill').style.width = `${percentage}%`;
+
+        document.getElementById('btnBakingPrev').disabled = (currentBakingStepIdx === 0);
+        document.getElementById('btnBakingNext').innerText = (currentBakingStepIdx === bakingStepsArray.length - 1) ? "완료!" : "다음 단계";
+    }
+
+    function navigateBakingStep(direction) {
+        const nextIdx = currentBakingStepIdx + direction;
+
+        if (nextIdx >= 0 && nextIdx < bakingStepsArray.length) {
+            currentBakingStepIdx = nextIdx;
+            updateBakingStepView();
+            resetTimer();
+        } else if (nextIdx === bakingStepsArray.length) {
+            alert("🎉 맛있는 베이킹을 축하합니다! 과정을 완료했습니다.");
+            navigateTo('homePage');
+        }
+    }
+
+    function toggleTimer() {
+        const btn = document.getElementById('timerStartBtn');
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            btn.innerText = "시작";
+        } else {
+            timerInterval = setInterval(() => {
+                timerSeconds++;
+                updateTimerDisplay();
+            }, 1000);
+            btn.innerText = "일시정지";
+        }
+    }
+
+    function resetTimer() {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+        timerSeconds = 0;
+        updateTimerDisplay();
+        document.getElementById('timerStartBtn').innerText = "시작";
+    }
+
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timerSeconds / 60);
+        const seconds = timerSeconds % 60;
+        const minStr = minutes < 10 ? '0' + minutes : minutes;
+        const secStr = seconds < 10 ? '0' + seconds : seconds;
+        document.getElementById('timerDisplay').innerText = `${minStr}:${secStr}`;
+    }
+
+    renderCategoryChips();
+    renderRecipes();
+</script>
 </body>
 </html>
